@@ -7,8 +7,3 @@ policy "terraform-restrict-sg" {
  source            = "./terraform-restrict-sg.sentinel"
  enforcement_level = "hard-mandatory"
 }
-
-policy "terraform-restrict-cloudtrail" {
- source            = "./terraform-restrict-cloudtrail.sentinel"
- enforcement_level = "hard-mandatory"
-}
