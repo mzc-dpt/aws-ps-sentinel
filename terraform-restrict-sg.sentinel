@@ -7,9 +7,14 @@ disallowed_cidr_blocks = [
 main = rule {
   all tfplan.resources.aws_security_group as _, instances {
     all instances as _, sg {
-      all sg.applied.ingress as _, ingress {
-        all disallowed_cidr_blocks as _, block {
-          block not in ingress.cidr_blocks
+      all sg.applied.ingress as ingress {
+        # Check if ingress is defined and not empty
+        ingress != null and ingress != [] and
+        all disallowed_cidr_blocks as block {
+          # Check if cidr_blocks attribute is defined and not empty
+          ingress.cidr_blocks != null and ingress.cidr_blocks != [] and
+          # Check if the disallowed block is not in the cidr_blocks
+          ingress.cidr_blocks not contains block
         }
       }
     }
